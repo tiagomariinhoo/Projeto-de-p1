@@ -4,6 +4,10 @@
 volatile int exit_programa = FALSE; //Tambem pode ser while(!exit_program) ali no while, ao invés de !key[KEY_ESC]
 void fecha_programa() {exit_programa=TRUE;}
 int trilho(int x,int y){
+    //y = -y;
+    printf ("X:%d Y:%d\n",x,y);
+    if(y<0 || y>530 || x<0 || x>574)
+        return 0;
     return 1;
 }
 
@@ -74,16 +78,20 @@ int main ()
 
             if(clock() - tempo_andar > 5){
                 if(direcao_atual==0){
-                    pos_x++;
+                    if(trilho(pos_x+1,pos_y))
+                        pos_x++;
                 }
                 else if(direcao_atual==1){
-                    pos_x--;
+                    if(trilho(pos_x-1,pos_y))
+                        pos_x--;
                 }
                 else if(direcao_atual==2){
-                    pos_y--;
+                    if(trilho(pos_x,pos_y-1))
+                        pos_y--;
                 }
                 else if (direcao_atual==3){
-                    pos_y++;
+                    if(trilho(pos_x,pos_y+1))
+                        pos_y++;
                 }
                 tempo_andar = clock();
             }
