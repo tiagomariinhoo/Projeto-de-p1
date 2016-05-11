@@ -3,7 +3,7 @@
 #include <stdio.h>
 #define MAX_X 555
 #define MAX_Y 515
-#define MIN 15
+#define MIN_XY 15
 
 volatile int exit_programa = FALSE; //Tambem pode ser while(!exit_program) ali no while, ao invés de !key[KEY_ESC]
 void fecha_programa() {exit_programa=TRUE;}
@@ -13,7 +13,7 @@ int trilho(int x,int y){
     //ANDAR NAS CORDENADAS X
 
     if(x==MAX_X){
-        if((y<=MAX_Y && y>=460) || (y<=410 && y>=353) || y==245 || (y<=141 && y>=MIN))
+        if((y<=MAX_Y && y>=460) || (y<=410 && y>=353) || y==245 || (y<=141 && y>=MIN_XY))
             return 1;
     }
 
@@ -23,7 +23,7 @@ int trilho(int x,int y){
     }
 
     else if(x==450){
-        if((y<=460 && y>=MIN))
+        if((y<=460 && y>=MIN_XY))
             return 1;
     }
 
@@ -33,22 +33,22 @@ int trilho(int x,int y){
     }
 
     else if(x==318){
-        if((y<=MAX_Y && y>=460) || (y<=410 && y>=354) || (y<=194 && y>=141) || (y<=90 && y>=MIN))
+        if((y<=MAX_Y && y>=460) || (y<=410 && y>=354) || (y<=194 && y>=141) || (y<=90 && y>=MIN_XY))
             return 1;
     }
 
     else if(x==257){
-        if((y<=MAX_Y && y>=460) || (y<=410 && y>=354) || (y<=194 && y>=141) || (y<=90 && y>=MIN))
+        if((y<=MAX_Y && y>=460) || (y<=410 && y>=354) || (y<=194 && y>=141) || (y<=90 && y>=MIN_XY))
             return 1;
     }
 
     else if(x==187){
-        if((y<=460 && y>=410) || (y<=354 && y>=194) || (y<=141 && y>=90))
+        if((y<=460 && y>=410) || (y<=353 && y>=194) || (y<=141 && y>=90))
             return 1;
     }
 
     else if(x==123){
-        if((y<=460 && y>=MIN))
+        if((y<=460 && y>=MIN_XY))
             return 1;
     }
 
@@ -57,27 +57,27 @@ int trilho(int x,int y){
             return 1;
     }
 
-    else if(x==MIN){
-        if((y<=MAX_Y && y>=460) || (y<=410 && y>=353) || y==245 || (y<=141 && y>=MIN))
+    else if(x==MIN_XY){
+        if((y<=MAX_Y && y>=460) || (y<=410 && y>=353) || y==245 || (y<=141 && y>=MIN_XY))
             return 1;
     }
 
     //ANDAR NAS CORDENADAS Y
 
     if(y==MAX_Y){
-        if(x<=MAX_X && x>=MIN)
+        if(x<=MAX_X && x>=MIN_XY)
             return 1;
     }
     else if(y==460){
-        if((x<=MAX_X && x>=450) || (x<=385 && x>=318) || (x<=257 && x>=187) || (x<=123 && x>=MIN))
+        if((x<=MAX_X && x>=450) || (x<=385 && x>=318) || (x<=257 && x>=187) || (x<=123 && x>=MIN_XY))
             return 1;
     }
     else if(y==410){
-        if((x<=MAX_X && x>=512) || (x<=450 && x>=123) || (x<=61 && x>=MIN))
+        if((x<=MAX_X && x>=512) || (x<=450 && x>=123) || (x<=61 && x>=MIN_XY))
             return 1;
     }
     else if(y==353){
-        if((x<=MAX_X && x>=318) || (x<=257 && x>=MIN) || (x<=61 && x>=MIN))
+        if((x<=MAX_X && x>=318) || (x<=257 && x>=MIN_XY) || (x<=61 && x>=MIN_XY))
             return 1;
     }
 
@@ -87,7 +87,7 @@ int trilho(int x,int y){
     }
 
     else if(y==248){
-        if((x<=MAX_X && x>=385) ||(x<=187 && x>=MIN) )
+        if((x<=MAX_X && x>=385) ||(x<=187 && x>=MIN_XY) )
             return 1;
     }
 
@@ -97,17 +97,17 @@ int trilho(int x,int y){
     }
 
     else if(y==141){
-        if((x<=MAX_X && x>=450) || (x<=385 && x>=318) || (x<=257 && x>=187)|| (x<=123 && x>=MIN))
+        if((x<=MAX_X && x>=450) || (x<=385 && x>=318) || (x<=257 && x>=187)|| (x<=123 && x>=MIN_XY))
             return 1;
     }
 
     else if(y==90){
-        if((x<=MAX_X && x>=MIN))
+        if((x<=MAX_X && x>=MIN_XY))
             return 1;
     }
 
-    else if(y==MIN){
-        if((x<=MAX_X && x>=318) || (x<=257 && x>=MIN))
+    else if(y==MIN_XY){
+        if((x<=MAX_X && x>=318) || (x<=257 && x>=MIN_XY))
             return 1;
     }
 
@@ -161,7 +161,6 @@ int main ()
     int i = 0;
     int tempo_andar = clock();
     int tempo_sprite = clock();
-    int tempo_mudar_posicao = clock();
     int pos_x=555,pos_y=515;
     int direcao_atual=2; // 0=direita 1=esquerda 2=cima 3=baixo
     //GAME LOOP
