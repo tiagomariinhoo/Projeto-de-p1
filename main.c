@@ -4,12 +4,18 @@
 #define MAX_X 555
 #define MAX_Y 515
 #define MIN_XY 15
+#define VELOCIDADE 10 //quanto menor, mais rápido
+#define VELOCIDADE_SPRITE 100
 
+typedef struct comida{
+    int x;
+    int y;
+    int desenhar;
+}Comida;
 volatile int exit_programa = FALSE; //Tambem pode ser while(!exit_program) ali no while, ao invés de !key[KEY_ESC]
 void fecha_programa() {exit_programa=TRUE;}
 int trilho(int x,int y){
     //y = -y;
-    printf ("X:%d Y:%d\n",x,y);
     //ANDAR NAS CORDENADAS X
 
     if(x==MAX_X){
@@ -28,17 +34,17 @@ int trilho(int x,int y){
     }
 
     else if(x==385){
-        if((y<=460 && y>=410) || (y<=354 && y>=194) || (y<=141 && y>=90))
+        if((y<=460 && y>=410) || (y<=353 && y>=194) || (y<=141 && y>=90))
             return 1;
     }
 
     else if(x==318){
-        if((y<=MAX_Y && y>=460) || (y<=410 && y>=354) || (y<=194 && y>=141) || (y<=90 && y>=MIN_XY))
+        if((y<=MAX_Y && y>=460) || (y<=410 && y>=353) || (y<=194 && y>=141) || (y<=90 && y>=MIN_XY))
             return 1;
     }
 
     else if(x==257){
-        if((y<=MAX_Y && y>=460) || (y<=410 && y>=354) || (y<=194 && y>=141) || (y<=90 && y>=MIN_XY))
+        if((y<=MAX_Y && y>=460) || (y<=410 && y>=353) || (y<=194 && y>=141) || (y<=90 && y>=MIN_XY))
             return 1;
     }
 
@@ -113,7 +119,14 @@ int trilho(int x,int y){
 
     return 0;
 }
-
+void setarPixelComidas (Comida * comidas){
+    comidas[0].x = 450;
+    comidas[0].y = 460;
+    comidas[1].x = MIN_XY;
+    comidas[1].y = MIN_XY;
+    comidas[2].x = 187;
+    comidas[2].y = 142;
+}
 int trilho1(int x, int y){
     printf ("X:%d Y:%d\n",x,y);
     if(y<0 || y>530 || x<0 || x>574)
@@ -165,6 +178,16 @@ int main ()
     int pos_x=555,pos_y=515;
     int direcao_atual=2; // 0=direita 1=esquerda 2=cima 3=baixo
     //GAME LOOP
+
+    //CRIAR VETOR DO TAMANHO DE COMIDAS
+    int quantidade_comidas=3;
+    Comida comidas[quantidade_comidas];
+
+    setarPixelComidas(comidas);
+
+
+
+
     while (!exit_programa) //Condição para fechar o programa, array Key[estado da tecla]
     {
         //textout_centre_ex(screen,font,"OI ATAIDE, SOU O MELHOR STORM SPIRIT",SCREEN_W/2, SCREEN_H/2,makecol(255,255,255),-1);
@@ -194,7 +217,8 @@ int main ()
             }
 
 
-            if(clock() - tempo_andar > 5){
+            if(clock() - tempo_andar > VELOCIDADE){
+                printf ("X:%d Y:%d\n",pos_x,pos_y);
                 if(direcao_atual==0){
                     if(trilho(pos_x+1,pos_y))
                         pos_x++;
@@ -215,7 +239,7 @@ int main ()
                 tempo_andar = clock();
             }
 
-            if(clock() - tempo_sprite > 100){
+            if(clock() - tempo_sprite > VELOCIDADE_SPRITE){
                 i++;
                 if(i>1)
                     i=0;
@@ -244,8 +268,12 @@ int main ()
         //Parte de desenho - Ponteiro para BITMAP que é o "screen", tudo que vc desenhar, aparece na tela
 
         draw_sprite(buffer,mapa,0,0);
+        int j;
+        for (j=0;j<quantidade_comidas;j++){
+            draw_sprite(buffer,comida,comidas[j].x+5,comidas[j].y);
+        }
+
         draw_sprite(buffer,sprite_atual,pos_x,pos_y);
-        draw_sprite(buffer,comida,450,461);
         //draw_sprite_ex(screen,pacman,pos_x,pos_y, DRAW_SPRITE_NORMAL,DRAW_SPRITE_NO_FLIP);
         draw_sprite(screen,buffer,0,0); //Sprite em que eu quero desenhar, buffer na screen
         //clear(buffer);
