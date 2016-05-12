@@ -122,10 +122,13 @@ int trilho(int x,int y){
 void setarPixelComidas (Comida * comidas){
     comidas[0].x = 450;
     comidas[0].y = 460;
+    comidas[0].desenhar=1;
     comidas[1].x = MIN_XY;
     comidas[1].y = MIN_XY;
+    comidas[0].desenhar=1;
     comidas[2].x = 187;
     comidas[2].y = 142;
+    comidas[0].desenhar=1;
 }
 int trilho1(int x, int y){
     printf ("X:%d Y:%d\n",x,y);
@@ -270,7 +273,8 @@ int main ()
         draw_sprite(buffer,mapa,0,0);
         int j;
         for (j=0;j<quantidade_comidas;j++){
-            draw_sprite(buffer,comida,comidas[j].x+5,comidas[j].y);
+            if(comidas[j].desenhar)
+                draw_sprite(buffer,comida,comidas[j].x+5,comidas[j].y);
         }
 
         draw_sprite(buffer,sprite_atual,pos_x,pos_y);
