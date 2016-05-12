@@ -156,6 +156,7 @@ int main ()
 
     BITMAP *buffer = create_bitmap(600,600);
     BITMAP *sprite_atual = cima[0]; //Ponteiro pro Boneco
+    BITMAP *comida = load_bitmap("sprites/comida.bmp",NULL);//Ponteiro pra comida
     BITMAP *mapa = load_bitmap("sprites/mapa.bmp",NULL); //Ponteiro pro mapa
 
     int i = 0;
@@ -244,6 +245,7 @@ int main ()
 
         draw_sprite(buffer,mapa,0,0);
         draw_sprite(buffer,sprite_atual,pos_x,pos_y);
+        draw_sprite(buffer,comida,450,461);
         //draw_sprite_ex(screen,pacman,pos_x,pos_y, DRAW_SPRITE_NORMAL,DRAW_SPRITE_NO_FLIP);
         draw_sprite(screen,buffer,0,0); //Sprite em que eu quero desenhar, buffer na screen
         //clear(buffer);
