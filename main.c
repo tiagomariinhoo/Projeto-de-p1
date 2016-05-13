@@ -4,7 +4,7 @@
 #define MAX_X 555
 #define MAX_Y 515
 #define MIN_XY 15
-#define VELOCIDADE 25 //quanto menor, mais rápido
+#define VELOCIDADE 10 //quanto menor, mais rápido
 #define VELOCIDADE_SPRITE 100
 
 typedef struct comida{
@@ -120,7 +120,7 @@ int trilho(int x,int y){
     return 0;
 }
 void setarPixelComidas (Comida * comidas){
-    int i, j=15, k=15, r=15, s=15, t=153, u=15, v=318, w=318;
+    //int i, j=15, k=15, r=15, s=15, t=153, u=15, v=318, w=318;
     comidas[0].x = 15;
     comidas[0].y = 520;
     comidas[0].desenhar=1;
@@ -442,6 +442,9 @@ void setarPixelComidas (Comida * comidas){
     comidas[106].x = 558;
     comidas[106].y = 20;
     comidas[106].desenhar=1;
+    comidas[107].x = 555;
+    comidas[107].y = 460;
+    comidas[107].desenhar=1;
 }
 int trilho1(int x, int y){
     printf ("X:%d Y:%d\n",x,y);
@@ -496,7 +499,7 @@ int main ()
     //GAME LOOP
 
     //CRIAR VETOR DO TAMANHO DE COMIDAS
-    int quantidade_comidas=106;
+    int quantidade_comidas=108;
     Comida comidas[quantidade_comidas];
 
     setarPixelComidas(comidas);
@@ -573,6 +576,11 @@ int main ()
                 }
                 tempo_sprite = clock();
             }
+            if(pos_x==comidas[107].x && pos_y==comidas[107].y) //Checar colisao do pacman com a comida,QUANDO COME DESAPARECE
+            {
+                comidas[107].desenhar=0;
+            }
+
             //printf ("tempo:%d clock:%d\n",tempo,clock());
 
 
