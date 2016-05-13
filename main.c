@@ -454,7 +454,7 @@ int trilho1(int x, int y){
 
 }
 void retirarTrilho(Comida * comida, int x, int y){
-    if((comida->x >= x && comida->x <= x+20) && (comida->y >= y && comida->y <= y+20))
+    if((comida->x >= x-5 && comida->x <= x+15) && (comida->y >= y-5 && comida->y <= y+15))
         comida->desenhar=0;
 }
 
