@@ -453,6 +453,10 @@ int trilho1(int x, int y){
     return 1;
 
 }
+void retirarTrilho(Comida * comida, int x, int y){
+    if((comida->x >= x && comida->x <= x+20) && (comida->y >= y && comida->y <= y+20))
+        comida->desenhar=0;
+}
 
 END_OF_FUNCTION(fecha_programa);
 
@@ -576,10 +580,7 @@ int main ()
                 }
                 tempo_sprite = clock();
             }
-            if(pos_x==comidas[107].x && pos_y==comidas[107].y) //Checar colisao do pacman com a comida,QUANDO COME DESAPARECE
-            {
-                comidas[107].desenhar=0;
-            }
+        int j;
 
             //printf ("tempo:%d clock:%d\n",tempo,clock());
 
@@ -592,8 +593,9 @@ int main ()
         //Parte de desenho - Ponteiro para BITMAP que é o "screen", tudo que vc desenhar, aparece na tela
 
         draw_sprite(buffer,mapa,0,0);
-        int j;
+
         for (j=0;j<quantidade_comidas;j++){
+            retirarTrilho(&comidas[j],pos_x,pos_y);
             if(comidas[j].desenhar)
                 draw_sprite(buffer,comida,comidas[j].x+5,comidas[j].y);
         }
