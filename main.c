@@ -1,10 +1,11 @@
 #include <allegro.h>
 #include <time.h>
 #include <stdio.h>
+#include <stdlib.h>
 #define MAX_X 555
 #define MAX_Y 515
 #define MIN_XY 15
-#define VELOCIDADE 10 //quanto menor, mais rápido
+#define VELOCIDADE 5 //quanto menor, mais rápido
 #define VELOCIDADE_SPRITE 100
 
 typedef struct comida{
@@ -711,9 +712,11 @@ int trilho1(int x, int y){
     return 1;
 
 }
-void retirarTrilho(Comida * comida, int x, int y){
-    if((comida->x >= x-5 && comida->x <= x+15) && (comida->y >= y-5 && comida->y <= y+15))
+void retirarTrilho(Comida * comida, int x, int y, int * score){
+    if((comida->x >= x-5 && comida->x <= x+15) && (comida->y >= y-5 && comida->y <= y+15) && comida->desenhar==1){
         comida->desenhar=0;
+        *score+=10;
+    }
 }
 
 END_OF_FUNCTION(fecha_programa);
@@ -724,7 +727,7 @@ int main ()
     install_timer(); //Instalar os timers padrão, funcionar o mouse e tocar audio etc
     install_keyboard(); //Para instalar o teclado,tambem pode instalar mouse etc
     set_color_depth(32); //Parametros são a quantidade de cores, 32 bits,16 bits etc
-    set_gfx_mode(GFX_AUTODETECT_WINDOWED,600,555,0,0); //Autodetect detecta o driver de vídeo, é o recomendado, windowed e fullsc
+    set_gfx_mode(GFX_AUTODETECT_WINDOWED,800,555,0,0); //Autodetect detecta o driver de vídeo, é o recomendado, windowed e fullsc
     set_window_title("PACMAN"); //Titulo da janela do programa
 
     exit_programa=FALSE;
@@ -748,31 +751,30 @@ int main ()
     baixo[1] = load_bitmap("sprites/pacman22.bmp",NULL);
 
 
-    BITMAP *buffer = create_bitmap(600,600);
+    BITMAP *buffer = create_bitmap(800,800);
     BITMAP *sprite_atual = cima[0]; //Ponteiro pro Boneco
     BITMAP *comida = load_bitmap("sprites/comida.bmp",NULL);//Ponteiro pra comida
     BITMAP *mapa = load_bitmap("sprites/mapa.bmp",NULL); //Ponteiro pro mapa
 
+    int score=0;
     int i = 0;
-    int tempo_andar = clock();
+    int tempo;
+    int tempo_andar = 0;
     int tempo_sprite = clock();
     int pos_x=555,pos_y=515;
     int direcao_atual=2; // 0=direita 1=esquerda 2=cima 3=baixo
     //GAME LOOP
 
     //CRIAR VETOR DO TAMANHO DE COMIDAS
-    int quantidade_comidas=200;
+    int quantidade_comidas=197;
     Comida comidas[quantidade_comidas];
 
     setarPixelComidas(comidas);
 
-
-
-
     while (!exit_programa) //Condição para fechar o programa, array Key[estado da tecla]
     {
         //textout_centre_ex(screen,font,"OI ATAIDE, SOU O MELHOR STORM SPIRIT",SCREEN_W/2, SCREEN_H/2,makecol(255,255,255),-1);
-
+        tempo=clock();
         //INPUT
         //Detecta as entradas
             if(key[KEY_ESC]){
@@ -785,21 +787,22 @@ int main ()
             }
 
             if(key[KEY_S]){
-                if(trilho(pos_x,pos_y+1))
+               if(trilho(pos_x,pos_y+1))
                     direcao_atual=3;
             }
             if(key[KEY_A]){
-                if(trilho(pos_x-1,pos_y))
+               if(trilho(pos_x-1,pos_y))
                     direcao_atual=1;
             }
             if(key[KEY_W]){
-                if(trilho(pos_x,pos_y-1))
+               if(trilho(pos_x,pos_y-1))
                     direcao_atual=2;
             }
 
-
-            if(clock() - tempo_andar > VELOCIDADE){
-                printf ("X:%d Y:%d\n",pos_x,pos_y);
+            //printf ("tempo:%d andar:%d\n",tempo, tempo_andar);
+            if(tempo >= tempo_andar){
+                //printf ("X:%d Y:%d\n",pos_x,pos_y);
+                tempo_andar +=VELOCIDADE;
                 if(direcao_atual==0){
                     if(trilho(pos_x+1,pos_y))
                         pos_x++;
@@ -816,12 +819,11 @@ int main ()
                     if(trilho(pos_x,pos_y+1))
                         pos_y++;
                 }
-
-                tempo_andar = clock();
             }
 
-            if(clock() - tempo_sprite > VELOCIDADE_SPRITE){
+            if(tempo >= tempo_sprite){
                 i++;
+                tempo_sprite+=VELOCIDADE_SPRITE;
                 if(i>1)
                     i=0;
                 if(direcao_atual==0){
@@ -836,7 +838,6 @@ int main ()
                 else if (direcao_atual==3){
                     sprite_atual = baixo[i];
                 }
-                tempo_sprite = clock();
             }
         int j;
 
@@ -853,17 +854,16 @@ int main ()
         draw_sprite(buffer,mapa,0,0);
 
         for (j=0;j<quantidade_comidas;j++){
-            retirarTrilho(&comidas[j],pos_x,pos_y);
-            if(comidas[j].desenhar)
+            retirarTrilho(&comidas[j],pos_x,pos_y,&score);
+            if(comidas[j].desenhar && comidas[j].x!=0)
                 draw_sprite(buffer,comida,comidas[j].x+5,comidas[j].y);
         }
 
         draw_sprite(buffer,sprite_atual,pos_x,pos_y);
-        //draw_sprite_ex(screen,pacman,pos_x,pos_y, DRAW_SPRITE_NORMAL,DRAW_SPRITE_NO_FLIP);
+        char scor[20];
+        sprintf(scor,"Score: %d",score);
+        textout_ex(buffer, font, scor, 700, 100,makecol(0, 0, 255), -1);
         draw_sprite(screen,buffer,0,0); //Sprite em que eu quero desenhar, buffer na screen
-        //clear(buffer);
-
-
     }
     //FINALIZAÇÃO
     destroy_bitmap(buffer);
