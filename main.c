@@ -5,7 +5,7 @@
 #define MAX_X 555
 #define MAX_Y 515
 #define MIN_XY 15
-#define VELOCIDADE 5 //quanto menor, mais rápido
+#define VELOCIDADE 10 //quanto menor, mais rápido
 #define VELOCIDADE_SPRITE 100
 
 typedef struct comida{
