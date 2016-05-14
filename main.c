@@ -861,8 +861,8 @@ int main ()
 
         draw_sprite(buffer,sprite_atual,pos_x,pos_y);
         char scor[20];
-        sprintf(scor,"Score: %d",score);
-        textout_ex(buffer, font, scor, 700, 100,makecol(0, 0, 255), -1);
+        sprintf(scor,"SCORE: %d",score);
+        textout_ex(buffer, font, scor, 650, 50,makecol(255, 255, 255), -1);
         draw_sprite(screen,buffer,0,0); //Sprite em que eu quero desenhar, buffer na screen
     }
     //FINALIZAÇÃO
