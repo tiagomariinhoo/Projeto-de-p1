@@ -6,7 +6,7 @@
 #define MAX_Y 515
 #define MIN_XY 15
 #define VELOCIDADE 10 //quanto menor, mais rápido
-#define VELOCIDADE_FANTASMA 10
+#define VELOCIDADE_FANTASMA 7
 #define VELOCIDADE_SPRITE 100
 #define ATT_QUADRANTE 1000
 #define DIREITA 0
@@ -732,6 +732,11 @@ void retirarTrilho(Comida * comida, int x, int y, int * score){
         *score+=10;
     }
 }
+void verificarMorreu(Fantasma * fantasma,int x,int y, int *score){
+    if((fantasma->x >= x-15 && fantasma->x <= x+15) && (fantasma->y >= y-15 && fantasma->y <= y+15))
+        *score=-20;
+}
+
 void setarFantasmas(Fantasma * fantasmas){
 
     fantasmas[0].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/vermelho_direita.bmp",NULL);
@@ -774,14 +779,14 @@ void setarFantasmas(Fantasma * fantasmas){
 void movimentarFantasmaQ1(Fantasma * fantasma){
         int chance=-1;
         if(trilho(fantasma->x-1,fantasma->y) && fantasma->direcao!=DIREITA && fantasma->direcao!=ESQUERDA){
-            chance = rand()%2;
+            chance = rand()%4;
             if(chance==1){
                 fantasma->direcao = ESQUERDA;
                 fantasma->sprite_atual = fantasma->sprites[ESQUERDA];
             }
         }
         else if(trilho(fantasma->x,fantasma->y-1) && fantasma->direcao!=CIMA && fantasma->direcao!=BAIXO){
-            chance = rand()%2;
+            chance = rand()%4;
             if(chance==1){
                 fantasma->direcao = CIMA;
                 fantasma->sprite_atual = fantasma->sprites[CIMA];
@@ -805,14 +810,14 @@ void movimentarFantasmaQ1(Fantasma * fantasma){
 void movimentarFantasmaQ2(Fantasma * fantasma){
 int chance=-1;
         if(trilho(fantasma->x+1,fantasma->y) && fantasma->direcao!=DIREITA && fantasma->direcao!=ESQUERDA){
-            chance = rand()%2;
+            chance = rand()%4;
             if(chance==1){
                 fantasma->direcao = DIREITA;
                 fantasma->sprite_atual = fantasma->sprites[DIREITA];
             }
         }
         else if(trilho(fantasma->x,fantasma->y-1) && fantasma->direcao!=CIMA && fantasma->direcao!=BAIXO){
-            chance = rand()%2;
+            chance = rand()%4;
             if(chance==1){
                 fantasma->direcao = CIMA;
                 fantasma->sprite_atual = fantasma->sprites[CIMA];
@@ -837,14 +842,14 @@ int chance=-1;
 void movimentarFantasmaQ3(Fantasma * fantasma){
     int chance=-1;
         if(trilho(fantasma->x,fantasma->y+1) && fantasma->direcao!=CIMA && fantasma->direcao!=BAIXO){
-            chance = rand()%2;
+            chance = rand()%4;
             if(chance==1){
                 fantasma->direcao = BAIXO;
                 fantasma->sprite_atual = fantasma->sprites[BAIXO];
             }
         }
         else if(trilho(fantasma->x-1,fantasma->y) && fantasma->direcao!=DIREITA && fantasma->direcao!=ESQUERDA){
-            chance = rand()%2;
+            chance = rand()%4;
             if(chance==1){
                 fantasma->direcao = ESQUERDA;
                 fantasma->sprite_atual = fantasma->sprites[ESQUERDA];
@@ -873,14 +878,15 @@ void movimentarFantasmaQ4(Fantasma * fantasma){
         int chance=-1;
 
          if(trilho(fantasma->x,fantasma->y+1) && fantasma->direcao!=CIMA && fantasma->direcao!=BAIXO){
-            chance = rand()%2;
+            chance = rand()%4;
             if(chance==1){
                 fantasma->direcao = BAIXO;
                 fantasma->sprite_atual = fantasma->sprites[BAIXO];
             }
         }
+
         else if(trilho(fantasma->x+1,fantasma->y) && fantasma->direcao!=DIREITA && fantasma->direcao!=ESQUERDA){
-            chance = rand()%2;
+            chance = rand()%4;
             if(chance==1){
                 fantasma->direcao = DIREITA;
                 fantasma->sprite_atual = fantasma->sprites[DIREITA];
@@ -1126,10 +1132,12 @@ int main ()
             if(comidas[j].desenhar && comidas[j].x!=0 && comidas[j].y!=0)
                 draw_sprite(buffer,comida,comidas[j].x+5,comidas[j].y);
         }
+
         for (j=0;j<quantidade_fantasmas;j++){
             draw_sprite(buffer,fantasmas[j].sprite_atual,fantasmas[j].x,fantasmas[j].y);
-            if(fantasmas[j].x == pos_x && fantasmas[j].y == pos_y)
-                score=-9999;
+            verificarMorreu(&fantasmas[j],pos_x,pos_y,&score);
+            //if(fantasmas[j].x == pos_x && fantasmas[j].y == pos_y)
+            //   score=-9999;
         }
         draw_sprite(buffer,sprite_atual,pos_x,pos_y);
         char scor[20];
