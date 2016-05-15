@@ -921,7 +921,7 @@ int main ()
     LOCK_FUNCTION(exit_program);
     LOCK_VARIABLE(fecha_programa);
     set_close_button_callback(fecha_programa);
-    //srand( (unsigned)time(NULL) );
+    srand( (unsigned)time(NULL) );
 
     BITMAP *direita[2];
     BITMAP *esquerda[2];
@@ -1140,6 +1140,7 @@ int main ()
         else{
             sprintf(scor,"PERDEU LIXO");
             textout_ex(buffer, font, scor, 650, 50,makecol(255, 255, 255), -1);
+
         }
 
         draw_sprite(screen,buffer,0,0); //Sprite em que eu quero desenhar, buffer na screen
