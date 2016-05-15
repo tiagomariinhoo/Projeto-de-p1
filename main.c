@@ -6,8 +6,9 @@
 #define MAX_Y 515
 #define MIN_XY 15
 #define VELOCIDADE 10 //quanto menor, mais rápido
-#define VELOCIDADE_FANTASMA 5
+#define VELOCIDADE_FANTASMA 10
 #define VELOCIDADE_SPRITE 100
+#define ATT_QUADRANTE 1000
 #define DIREITA 0
 #define ESQUERDA 1
 #define CIMA 2
@@ -731,6 +732,179 @@ void retirarTrilho(Comida * comida, int x, int y, int * score){
         *score+=10;
     }
 }
+void setarFantasmas(Fantasma * fantasmas){
+
+    fantasmas[0].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/vermelho_direita.bmp",NULL);
+    fantasmas[0].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/vermelho_esquerda.bmp",NULL);
+    fantasmas[0].sprites[CIMA] = load_bitmap("sprites/Fantasmas/vermelho_cima.bmp",NULL);
+    fantasmas[0].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/vermelho_baixo.bmp",NULL);
+    fantasmas[0].sprite_atual = fantasmas[0].sprites[DIREITA];
+    fantasmas[0].x = MIN_XY;
+    fantasmas[0].y = MIN_XY;
+    fantasmas[0].direcao = DIREITA;
+
+    fantasmas[1].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/laranja_direita.bmp",NULL);
+    fantasmas[1].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/laranja_esquerda.bmp",NULL);
+    fantasmas[1].sprites[CIMA] = load_bitmap("sprites/Fantasmas/laranja_cima.bmp",NULL);
+    fantasmas[1].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/laranja_baixo.bmp",NULL);
+    fantasmas[1].sprite_atual = fantasmas[0].sprites[CIMA];
+    fantasmas[1].x = MAX_X;
+    fantasmas[1].y = MIN_XY;
+    fantasmas[1].direcao = CIMA;
+
+    fantasmas[2].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/azul_direita.bmp",NULL);
+    fantasmas[2].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/azul_esquerda.bmp",NULL);
+    fantasmas[2].sprites[CIMA] = load_bitmap("sprites/Fantasmas/azul_cima.bmp",NULL);
+    fantasmas[2].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/azul_baixo.bmp",NULL);
+    fantasmas[2].sprite_atual = fantasmas[0].sprites[BAIXO];
+    fantasmas[2].x = MIN_XY;
+    fantasmas[2].y = MAX_Y;
+    fantasmas[2].direcao = BAIXO;
+
+    fantasmas[3].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/rosa_direita.bmp",NULL);
+    fantasmas[3].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/rosa_esquerda.bmp",NULL);
+    fantasmas[3].sprites[CIMA] = load_bitmap("sprites/Fantasmas/rosa_cima.bmp",NULL);
+    fantasmas[3].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/rosa_baixo.bmp",NULL);
+    fantasmas[3].sprite_atual = fantasmas[0].sprites[BAIXO];
+    fantasmas[3].x = MIN_XY;
+    fantasmas[3].y = MAX_Y;
+    fantasmas[3].direcao = BAIXO;
+
+}
+void movimentarFantasmaQ1(Fantasma * fantasma){
+        int chance=-1;
+        if(trilho(fantasma->x-1,fantasma->y) && fantasma->direcao!=DIREITA && fantasma->direcao!=ESQUERDA){
+            chance = rand()%2;
+            if(chance==1){
+                fantasma->direcao = ESQUERDA;
+                fantasma->sprite_atual = fantasma->sprites[ESQUERDA];
+            }
+        }
+        else if(trilho(fantasma->x,fantasma->y-1) && fantasma->direcao!=CIMA && fantasma->direcao!=BAIXO){
+            chance = rand()%2;
+            if(chance==1){
+                fantasma->direcao = CIMA;
+                fantasma->sprite_atual = fantasma->sprites[CIMA];
+            }
+        }
+        else if(trilho(fantasma->x+1,fantasma->y) && fantasma->direcao!=DIREITA && fantasma->direcao!=ESQUERDA){
+            chance = rand()%2;
+            if(chance==1){
+                fantasma->direcao = DIREITA;
+                fantasma->sprite_atual = fantasma->sprites[DIREITA];
+            }
+        }
+        else if(trilho(fantasma->x,fantasma->y+1) && fantasma->direcao!=CIMA && fantasma->direcao!=BAIXO){
+            chance = rand()%2;
+            if(chance==1){
+                fantasma->direcao = BAIXO;
+                fantasma->sprite_atual = fantasma->sprites[BAIXO];
+            }
+        }
+}
+void movimentarFantasmaQ2(Fantasma * fantasma){
+int chance=-1;
+        if(trilho(fantasma->x+1,fantasma->y) && fantasma->direcao!=DIREITA && fantasma->direcao!=ESQUERDA){
+            chance = rand()%2;
+            if(chance==1){
+                fantasma->direcao = DIREITA;
+                fantasma->sprite_atual = fantasma->sprites[DIREITA];
+            }
+        }
+        else if(trilho(fantasma->x,fantasma->y-1) && fantasma->direcao!=CIMA && fantasma->direcao!=BAIXO){
+            chance = rand()%2;
+            if(chance==1){
+                fantasma->direcao = CIMA;
+                fantasma->sprite_atual = fantasma->sprites[CIMA];
+            }
+        }
+        else if(trilho(fantasma->x-1,fantasma->y) && fantasma->direcao!=DIREITA && fantasma->direcao!=ESQUERDA){
+            chance = rand()%2;
+            if(chance==1){
+                fantasma->direcao = ESQUERDA;
+                fantasma->sprite_atual = fantasma->sprites[ESQUERDA];
+            }
+        }
+        else if(trilho(fantasma->x,fantasma->y+1) && fantasma->direcao!=CIMA && fantasma->direcao!=BAIXO){
+            chance = rand()%2;
+            if(chance==1){
+                fantasma->direcao = BAIXO;
+                fantasma->sprite_atual = fantasma->sprites[BAIXO];
+            }
+        }
+
+}
+void movimentarFantasmaQ3(Fantasma * fantasma){
+    int chance=-1;
+        if(trilho(fantasma->x,fantasma->y+1) && fantasma->direcao!=CIMA && fantasma->direcao!=BAIXO){
+            chance = rand()%2;
+            if(chance==1){
+                fantasma->direcao = BAIXO;
+                fantasma->sprite_atual = fantasma->sprites[BAIXO];
+            }
+        }
+        else if(trilho(fantasma->x-1,fantasma->y) && fantasma->direcao!=DIREITA && fantasma->direcao!=ESQUERDA){
+            chance = rand()%2;
+            if(chance==1){
+                fantasma->direcao = ESQUERDA;
+                fantasma->sprite_atual = fantasma->sprites[ESQUERDA];
+            }
+        }
+        else if(trilho(fantasma->x,fantasma->y-1) && fantasma->direcao!=CIMA && fantasma->direcao!=BAIXO){
+            chance = rand()%2;
+            if(chance==1){
+                fantasma->direcao = CIMA;
+                fantasma->sprite_atual = fantasma->sprites[CIMA];
+            }
+        }
+        else if(trilho(fantasma->x+1,fantasma->y) && fantasma->direcao!=DIREITA && fantasma->direcao!=ESQUERDA){
+            chance = rand()%2;
+            if(chance==1){
+                fantasma->direcao = DIREITA;
+                fantasma->sprite_atual = fantasma->sprites[DIREITA];
+            }
+        }
+
+
+
+
+}
+void movimentarFantasmaQ4(Fantasma * fantasma){
+        int chance=-1;
+
+         if(trilho(fantasma->x,fantasma->y+1) && fantasma->direcao!=CIMA && fantasma->direcao!=BAIXO){
+            chance = rand()%2;
+            if(chance==1){
+                fantasma->direcao = BAIXO;
+                fantasma->sprite_atual = fantasma->sprites[BAIXO];
+            }
+        }
+        else if(trilho(fantasma->x+1,fantasma->y) && fantasma->direcao!=DIREITA && fantasma->direcao!=ESQUERDA){
+            chance = rand()%2;
+            if(chance==1){
+                fantasma->direcao = DIREITA;
+                fantasma->sprite_atual = fantasma->sprites[DIREITA];
+            }
+        }
+        else if(trilho(fantasma->x,fantasma->y-1) && fantasma->direcao!=CIMA && fantasma->direcao!=BAIXO){
+            chance = rand()%2;
+            if(chance==1){
+                fantasma->direcao = CIMA;
+                fantasma->sprite_atual = fantasma->sprites[CIMA];
+            }
+        }
+        else if(trilho(fantasma->x-1,fantasma->y) && fantasma->direcao!=DIREITA && fantasma->direcao!=ESQUERDA){
+            chance = rand()%2;
+            if(chance==1){
+                fantasma->direcao = ESQUERDA;
+                fantasma->sprite_atual = fantasma->sprites[ESQUERDA];
+            }
+        }
+
+
+
+}
+
 
 END_OF_FUNCTION(fecha_programa);
 
@@ -762,6 +936,8 @@ int main ()
     baixo[0] = load_bitmap("sprites/pacman2.bmp",NULL);
     baixo[1] = load_bitmap("sprites/pacman22.bmp",NULL);
 
+    int quadrante=4;    //1 2
+                        //3 4
     FONT * font1 = load_font("font1.pcx",NULL,NULL);
 
     BITMAP *buffer = create_bitmap(800,800);
@@ -770,99 +946,15 @@ int main ()
     BITMAP *mapa = load_bitmap("sprites/mapa.bmp",NULL); //Ponteiro pro mapa
 
     int quantidade_fantasmas=4;
-    Fantasma fantasmas[10];
-    fantasmas[0].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/vermelho_direita.bmp",NULL);
-    fantasmas[0].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/vermelho_esquerda.bmp",NULL);
-    fantasmas[0].sprites[CIMA] = load_bitmap("sprites/Fantasmas/vermelho_cima.bmp",NULL);
-    fantasmas[0].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/vermelho_baixo.bmp",NULL);
-    fantasmas[0].sprite_atual = fantasmas[0].sprites[DIREITA];
-    fantasmas[0].x = MIN_XY;
-    fantasmas[0].y = MIN_XY;
-    fantasmas[0].direcao = DIREITA;
-
-    fantasmas[1].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/laranja_direita.bmp",NULL);
-    fantasmas[1].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/laranja_esquerda.bmp",NULL);
-    fantasmas[1].sprites[CIMA] = load_bitmap("sprites/Fantasmas/laranja_cima",NULL);
-    fantasmas[1].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/laranja_baixo",NULL);
-    fantasmas[1].sprite_atual = fantasmas[0].sprites[CIMA];
-    fantasmas[1].x = MAX_X;
-    fantasmas[1].y = MIN_XY;
-    fantasmas[1].direcao = CIMA;
-
-    fantasmas[2].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/azul_direita.bmp",NULL);
-    fantasmas[2].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/azul_esquerda.bmp",NULL);
-    fantasmas[2].sprites[CIMA] = load_bitmap("sprites/Fantasmas/azul_cima.bmp",NULL);
-    fantasmas[2].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/azul_baixo.bmp",NULL);
-    fantasmas[2].sprite_atual = fantasmas[0].sprites[BAIXO];
-    fantasmas[2].x = MIN_XY;
-    fantasmas[2].y = MAX_Y;
-    fantasmas[2].direcao = BAIXO;
-
-    fantasmas[3].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/rosa_direita.bmp",NULL);
-    fantasmas[3].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/rosa_esquerda.bmp",NULL);
-    fantasmas[3].sprites[CIMA] = load_bitmap("sprites/Fantasmas/rosa_cima.bmp",NULL);
-    fantasmas[3].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/rosa_baixo.bmp",NULL);
-    fantasmas[3].sprite_atual = fantasmas[0].sprites[BAIXO];
-    fantasmas[3].x = MIN_XY;
-    fantasmas[3].y = MAX_Y;
-    fantasmas[3].direcao = BAIXO;
-
-
-    int a;
-    /*for (a=3;a<10;a++){
-        fantasmas[a].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/azul_direita.bmp",NULL);
-        fantasmas[a].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/azul_esquerda.bmp",NULL);
-        fantasmas[a].sprites[CIMA] = load_bitmap("sprites/Fantasmas/azul_cima.bmp",NULL);
-        fantasmas[a].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/azul_baixo.bmp",NULL);
-        fantasmas[a].sprite_atual = fantasmas[0].sprites[ESQUERDA];
-        fantasmas[a].x = MAX_X;
-        fantasmas[a].y = MIN_XY;
-        fantasmas[a].direcao = ESQUERDA;
-    }*/
-
-    for (a=0;a<4;a++){
-    fantasmas[a].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/vermelho_direita.bmp",NULL);
-    fantasmas[a].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/vermelho_esquerda.bmp",NULL);
-    fantasmas[a].sprites[CIMA] = load_bitmap("sprites/Fantasmas/vermelho_cima.bmp",NULL);
-    fantasmas[a].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/vermelho_baixo.bmp",NULL);
-    fantasmas[a].sprite_atual = fantasmas[0].sprites[DIREITA];
-    fantasmas[a].x = MIN_XY;
-    fantasmas[a].y = MIN_XY;
-    fantasmas[a].direcao = DIREITA;
-
-    fantasmas[a].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/laranja_direita.bmp",NULL);
-    fantasmas[a].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/laranja_esquerda.bmp",NULL);
-    fantasmas[a].sprites[CIMA] = load_bitmap("sprites/Fantasmas/laranja_cima",NULL);
-    fantasmas[a].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/laranja_baixo",NULL);
-    fantasmas[a].sprite_atual = fantasmas[0].sprites[ESQUERDA];
-    fantasmas[a].x = MAX_X;
-    fantasmas[a].y = MIN_XY;
-    fantasmas[a].direcao = ESQUERDA;
-
-    fantasmas[a].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/azul_direita.bmp",NULL);
-    fantasmas[a].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/azul_esquerda.bmp",NULL);
-    fantasmas[a].sprites[CIMA] = load_bitmap("sprites/Fantasmas/azul_cima.bmp",NULL);
-    fantasmas[a].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/azul_baixo.bmp",NULL);
-    fantasmas[a].sprite_atual = fantasmas[0].sprites[CIMA];
-    fantasmas[a].x = MIN_XY;
-    fantasmas[a].y = MAX_Y;
-    fantasmas[a].direcao = CIMA;
-
-    fantasmas[a].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/rosa_direita.bmp",NULL);
-    fantasmas[a].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/rosa_esquerda.bmp",NULL);
-    fantasmas[a].sprites[CIMA] = load_bitmap("sprites/Fantasmas/rosa_cima.bmp",NULL);
-    fantasmas[a].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/rosa_baixo.bmp",NULL);
-    fantasmas[a].sprite_atual = fantasmas[0].sprites[BAIXO];
-    fantasmas[a].x = MAX_X;
-    fantasmas[a].y = MIN_XY;
-    fantasmas[a].direcao = BAIXO;
-    }
+    Fantasma fantasmas[quantidade_fantasmas];
+    setarFantasmas(fantasmas);
 
     int score=0;
     int i = 0;
     int tempo;
     int tempo_andar = 0;
     int tempo_fantasma = 0;
+    int tempo_quadrante =0;
     int tempo_sprite = clock();
     int pos_x=555,pos_y=515;
     int direcao_atual=CIMA; //
@@ -925,6 +1017,21 @@ int main ()
                 }
             }
 
+            if(tempo >= tempo_quadrante){
+                printf ("Quadrante:%d\n",quadrante);
+                tempo_quadrante +=ATT_QUADRANTE;
+
+                if (pos_x <= MAX_X/2 && pos_y<=MAX_Y/2)
+                    quadrante=1;
+                else if (pos_x >= MAX_X/2 && pos_y<=MAX_Y/2)
+                    quadrante=2;
+                else if (pos_x <= MAX_X/2 && pos_y>=MAX_Y/2)
+                    quadrante=3;
+                else if (pos_x >= MAX_X/2 && pos_y>=MAX_Y/2)
+                    quadrante=4;
+
+            }
+
             if(tempo >= tempo_fantasma){
                 //printf ("X:%d Y:%d\n",pos_x,pos_y);
                 tempo_fantasma +=VELOCIDADE_FANTASMA;
@@ -962,36 +1069,21 @@ int main ()
                         }
 
                     }
+                    int k;
+                    if(quadrante==1){
+                        for(k=0;k<quantidade_fantasmas;k++)
+                            movimentarFantasmaQ1(&fantasmas[j]);
+                    }else if(quadrante==2){
+                        for(k=0;k<quantidade_fantasmas;k++)
+                            movimentarFantasmaQ2(&fantasmas[j]);
+                    }else if(quadrante==3){
+                        for(k=0;k<quantidade_fantasmas;k++)
+                            movimentarFantasmaQ3(&fantasmas[j]);
+                    }else if(quadrante==4){
+                        for(k=0;k<quantidade_fantasmas;k++)
+                            movimentarFantasmaQ4(&fantasmas[j]);
+                    }
 
-                    int chance=-1;
-                    if(trilho(fantasmas[j].x+1,fantasmas[j].y) && fantasmas[j].direcao!=DIREITA && fantasmas[j].direcao!=ESQUERDA){
-                        chance = rand()%2;
-                        if(chance==1){
-                            fantasmas[j].direcao = DIREITA;
-                            fantasmas[j].sprite_atual = fantasmas[j].sprites[DIREITA];
-                        }
-                    }
-                    else if(trilho(fantasmas[j].x-1,fantasmas[j].y) && fantasmas[j].direcao!=DIREITA && fantasmas[j].direcao!=ESQUERDA){
-                        chance = rand()%2;
-                        if(chance==1){
-                            fantasmas[j].direcao = ESQUERDA;
-                            fantasmas[j].sprite_atual = fantasmas[j].sprites[ESQUERDA];
-                        }
-                    }
-                    else if(trilho(fantasmas[j].x,fantasmas[j].y-1) && fantasmas[j].direcao!=CIMA && fantasmas[j].direcao!=BAIXO){
-                        chance = rand()%2;
-                        if(chance==1){
-                            fantasmas[j].direcao = CIMA;
-                            fantasmas[j].sprite_atual = fantasmas[j].sprites[CIMA];
-                        }
-                    }
-                    else if(trilho(fantasmas[j].x,fantasmas[j].y+1) && fantasmas[j].direcao!=CIMA && fantasmas[j].direcao!=BAIXO){
-                        chance = rand()%2;
-                        if(chance==1){
-                            fantasmas[j].direcao = BAIXO;
-                            fantasmas[j].sprite_atual = fantasmas[j].sprites[BAIXO];
-                        }
-                    }
                 }
 
             }
