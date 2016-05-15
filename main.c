@@ -5,7 +5,7 @@
 #define MAX_X 555
 #define MAX_Y 515
 #define MIN_XY 15
-#define VELOCIDADE 10 //quanto menor, mais rápido
+#define VELOCIDADE 5 //quanto menor, mais rápido
 #define VELOCIDADE_FANTASMA 5
 #define VELOCIDADE_SPRITE 100
 #define DIREITA 0
@@ -782,8 +782,8 @@ int main ()
 
     fantasmas[1].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/laranja_direita.bmp",NULL);
     fantasmas[1].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/laranja_esquerda.bmp",NULL);
-    fantasmas[1].sprites[CIMA] = load_bitmap("sprites/Fantasmas/laranja_cima",NULL);
-    fantasmas[1].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/laranja_baixo",NULL);
+    fantasmas[1].sprites[CIMA] = load_bitmap("sprites/Fantasmas/laranja_cima.bmp",NULL);
+    fantasmas[1].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/laranja_baixo.bmp",NULL);
     fantasmas[1].sprite_atual = fantasmas[0].sprites[CIMA];
     fantasmas[1].x = MAX_X;
     fantasmas[1].y = MIN_XY;
@@ -820,43 +820,7 @@ int main ()
         fantasmas[a].direcao = ESQUERDA;
     }*/
 
-    for (a=0;a<4;a++){
-    fantasmas[a].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/vermelho_direita.bmp",NULL);
-    fantasmas[a].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/vermelho_esquerda.bmp",NULL);
-    fantasmas[a].sprites[CIMA] = load_bitmap("sprites/Fantasmas/vermelho_cima.bmp",NULL);
-    fantasmas[a].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/vermelho_baixo.bmp",NULL);
-    fantasmas[a].sprite_atual = fantasmas[0].sprites[DIREITA];
-    fantasmas[a].x = MIN_XY;
-    fantasmas[a].y = MIN_XY;
-    fantasmas[a].direcao = DIREITA;
 
-    fantasmas[a].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/laranja_direita.bmp",NULL);
-    fantasmas[a].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/laranja_esquerda.bmp",NULL);
-    fantasmas[a].sprites[CIMA] = load_bitmap("sprites/Fantasmas/laranja_cima",NULL);
-    fantasmas[a].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/laranja_baixo",NULL);
-    fantasmas[a].sprite_atual = fantasmas[0].sprites[ESQUERDA];
-    fantasmas[a].x = MAX_X;
-    fantasmas[a].y = MIN_XY;
-    fantasmas[a].direcao = ESQUERDA;
-
-    fantasmas[a].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/azul_direita.bmp",NULL);
-    fantasmas[a].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/azul_esquerda.bmp",NULL);
-    fantasmas[a].sprites[CIMA] = load_bitmap("sprites/Fantasmas/azul_cima.bmp",NULL);
-    fantasmas[a].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/azul_baixo.bmp",NULL);
-    fantasmas[a].sprite_atual = fantasmas[0].sprites[CIMA];
-    fantasmas[a].x = MIN_XY;
-    fantasmas[a].y = MAX_Y;
-    fantasmas[a].direcao = CIMA;
-
-    fantasmas[a].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/rosa_direita.bmp",NULL);
-    fantasmas[a].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/rosa_esquerda.bmp",NULL);
-    fantasmas[a].sprites[CIMA] = load_bitmap("sprites/Fantasmas/rosa_cima.bmp",NULL);
-    fantasmas[a].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/rosa_baixo.bmp",NULL);
-    fantasmas[a].sprite_atual = fantasmas[0].sprites[BAIXO];
-    fantasmas[a].x = MAX_X;
-    fantasmas[a].y = MIN_XY;
-    fantasmas[a].direcao = BAIXO;
-    }
 
     int score=0;
     int i = 0;
@@ -1048,6 +1012,7 @@ int main ()
         else{
             sprintf(scor,"PERDEU LIXO");
             textout_ex(buffer, font, scor, 650, 50,makecol(255, 255, 255), -1);
+
         }
 
         draw_sprite(screen,buffer,0,0); //Sprite em que eu quero desenhar, buffer na screen
