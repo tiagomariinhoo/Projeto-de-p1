@@ -2,10 +2,11 @@
 1462668152 source:f:\pacman\projetopacman\main.c
 	<allegro.h>
 
-1463022943 source:e:\ufal\p1\projeto-de-p1\main.c
+1463279421 source:e:\ufal\p1\projeto-de-p1\main.c
 	<allegro.h>
 	<time.h>
 	<stdio.h>
+	<stdlib.h>
 
 1463268349 source:c:\users\tiago\desktop\projeto de p1\projetopacman\main.c
 	<allegro.h>
