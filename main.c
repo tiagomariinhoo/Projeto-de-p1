@@ -769,47 +769,94 @@ int main ()
     BITMAP *comida = load_bitmap("sprites/comida.bmp",NULL);//Ponteiro pra comida
     BITMAP *mapa = load_bitmap("sprites/mapa.bmp",NULL); //Ponteiro pro mapa
 
-    int quantidade_fantasmas=10;
+    int quantidade_fantasmas=4;
     Fantasma fantasmas[10];
-    fantasmas[0].sprites[DIREITA] = load_bitmap("sprites/pacman1.bmp",NULL);
-    fantasmas[0].sprites[ESQUERDA] = load_bitmap("sprites/pacman3.bmp",NULL);
-    fantasmas[0].sprites[CIMA] = load_bitmap("sprites/pacman4.bmp",NULL);
-    fantasmas[0].sprites[BAIXO] = load_bitmap("sprites/pacman2.bmp",NULL);
+    fantasmas[0].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/vermelho_direita.bmp",NULL);
+    fantasmas[0].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/vermelho_esquerda.bmp",NULL);
+    fantasmas[0].sprites[CIMA] = load_bitmap("sprites/Fantasmas/vermelho_cima.bmp",NULL);
+    fantasmas[0].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/vermelho_baixo.bmp",NULL);
     fantasmas[0].sprite_atual = fantasmas[0].sprites[DIREITA];
     fantasmas[0].x = MIN_XY;
     fantasmas[0].y = MIN_XY;
     fantasmas[0].direcao = DIREITA;
 
-    fantasmas[1].sprites[DIREITA] = load_bitmap("sprites/pacman1.bmp",NULL);
-    fantasmas[1].sprites[ESQUERDA] = load_bitmap("sprites/pacman3.bmp",NULL);
-    fantasmas[1].sprites[CIMA] = load_bitmap("sprites/pacman4.bmp",NULL);
-    fantasmas[1].sprites[BAIXO] = load_bitmap("sprites/pacman2.bmp",NULL);
-    fantasmas[1].sprite_atual = fantasmas[0].sprites[ESQUERDA];
+    fantasmas[1].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/laranja_direita.bmp",NULL);
+    fantasmas[1].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/laranja_esquerda.bmp",NULL);
+    fantasmas[1].sprites[CIMA] = load_bitmap("sprites/Fantasmas/laranja_cima",NULL);
+    fantasmas[1].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/laranja_baixo",NULL);
+    fantasmas[1].sprite_atual = fantasmas[0].sprites[CIMA];
     fantasmas[1].x = MAX_X;
     fantasmas[1].y = MIN_XY;
-    fantasmas[1].direcao = ESQUERDA;
+    fantasmas[1].direcao = CIMA;
 
-    fantasmas[2].sprites[DIREITA] = load_bitmap("sprites/pacman1.bmp",NULL);
-    fantasmas[2].sprites[ESQUERDA] = load_bitmap("sprites/pacman3.bmp",NULL);
-    fantasmas[2].sprites[CIMA] = load_bitmap("sprites/pacman4.bmp",NULL);
-    fantasmas[2].sprites[BAIXO] = load_bitmap("sprites/pacman2.bmp",NULL);
-    fantasmas[2].sprite_atual = fantasmas[0].sprites[DIREITA];
+    fantasmas[2].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/azul_direita.bmp",NULL);
+    fantasmas[2].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/azul_esquerda.bmp",NULL);
+    fantasmas[2].sprites[CIMA] = load_bitmap("sprites/Fantasmas/azul_cima.bmp",NULL);
+    fantasmas[2].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/azul_baixo.bmp",NULL);
+    fantasmas[2].sprite_atual = fantasmas[0].sprites[BAIXO];
     fantasmas[2].x = MIN_XY;
     fantasmas[2].y = MAX_Y;
-    fantasmas[2].direcao = DIREITA;
+    fantasmas[2].direcao = BAIXO;
+
+    fantasmas[3].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/rosa_direita.bmp",NULL);
+    fantasmas[3].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/rosa_esquerda.bmp",NULL);
+    fantasmas[3].sprites[CIMA] = load_bitmap("sprites/Fantasmas/rosa_cima.bmp",NULL);
+    fantasmas[3].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/rosa_baixo.bmp",NULL);
+    fantasmas[3].sprite_atual = fantasmas[0].sprites[BAIXO];
+    fantasmas[3].x = MIN_XY;
+    fantasmas[3].y = MAX_Y;
+    fantasmas[3].direcao = BAIXO;
+
 
     int a;
-    for (a=3;a<10;a++){
-        fantasmas[a].sprites[DIREITA] = load_bitmap("sprites/pacman1.bmp",NULL);
-        fantasmas[a].sprites[ESQUERDA] = load_bitmap("sprites/pacman3.bmp",NULL);
-        fantasmas[a].sprites[CIMA] = load_bitmap("sprites/pacman4.bmp",NULL);
-        fantasmas[a].sprites[BAIXO] = load_bitmap("sprites/pacman2.bmp",NULL);
+    /*for (a=3;a<10;a++){
+        fantasmas[a].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/azul_direita.bmp",NULL);
+        fantasmas[a].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/azul_esquerda.bmp",NULL);
+        fantasmas[a].sprites[CIMA] = load_bitmap("sprites/Fantasmas/azul_cima.bmp",NULL);
+        fantasmas[a].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/azul_baixo.bmp",NULL);
         fantasmas[a].sprite_atual = fantasmas[0].sprites[ESQUERDA];
         fantasmas[a].x = MAX_X;
         fantasmas[a].y = MIN_XY;
         fantasmas[a].direcao = ESQUERDA;
-    }
+    }*/
 
+    for (a=0;a<4;a++){
+    fantasmas[a].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/vermelho_direita.bmp",NULL);
+    fantasmas[a].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/vermelho_esquerda.bmp",NULL);
+    fantasmas[a].sprites[CIMA] = load_bitmap("sprites/Fantasmas/vermelho_cima.bmp",NULL);
+    fantasmas[a].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/vermelho_baixo.bmp",NULL);
+    fantasmas[a].sprite_atual = fantasmas[0].sprites[DIREITA];
+    fantasmas[a].x = MIN_XY;
+    fantasmas[a].y = MIN_XY;
+    fantasmas[a].direcao = DIREITA;
+
+    fantasmas[a].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/laranja_direita.bmp",NULL);
+    fantasmas[a].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/laranja_esquerda.bmp",NULL);
+    fantasmas[a].sprites[CIMA] = load_bitmap("sprites/Fantasmas/laranja_cima",NULL);
+    fantasmas[a].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/laranja_baixo",NULL);
+    fantasmas[a].sprite_atual = fantasmas[0].sprites[ESQUERDA];
+    fantasmas[a].x = MAX_X;
+    fantasmas[a].y = MIN_XY;
+    fantasmas[a].direcao = ESQUERDA;
+
+    fantasmas[a].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/azul_direita.bmp",NULL);
+    fantasmas[a].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/azul_esquerda.bmp",NULL);
+    fantasmas[a].sprites[CIMA] = load_bitmap("sprites/Fantasmas/azul_cima.bmp",NULL);
+    fantasmas[a].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/azul_baixo.bmp",NULL);
+    fantasmas[a].sprite_atual = fantasmas[0].sprites[CIMA];
+    fantasmas[a].x = MIN_XY;
+    fantasmas[a].y = MAX_Y;
+    fantasmas[a].direcao = CIMA;
+
+    fantasmas[a].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/rosa_direita.bmp",NULL);
+    fantasmas[a].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/rosa_esquerda.bmp",NULL);
+    fantasmas[a].sprites[CIMA] = load_bitmap("sprites/Fantasmas/rosa_cima.bmp",NULL);
+    fantasmas[a].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/rosa_baixo.bmp",NULL);
+    fantasmas[a].sprite_atual = fantasmas[0].sprites[BAIXO];
+    fantasmas[a].x = MAX_X;
+    fantasmas[a].y = MIN_XY;
+    fantasmas[a].direcao = BAIXO;
+    }
 
     int score=0;
     int i = 0;
