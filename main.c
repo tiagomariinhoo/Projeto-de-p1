@@ -5,10 +5,10 @@
 #define MAX_X 555
 #define MAX_Y 515
 #define MIN_XY 15
-#define VELOCIDADE 10 //quanto menor, mais rápido
-#define VELOCIDADE_FANTASMA 7
+//#define VELOCIDADE 10 //quanto menor, mais rápido
+//#define VELOCIDADE_FANTASMA 7
 #define VELOCIDADE_SPRITE 100
-#define ATT_QUADRANTE 1000
+//#define ATT_QUADRANTE 1000
 #define DIREITA 0
 #define ESQUERDA 1
 #define CIMA 2
@@ -192,9 +192,9 @@ void setarPixelComidas (Comida * comidas){
     comidas[18].x = 555;
     comidas[18].y = 520;
     comidas[18].desenhar=1;
-    /*comidas[19].x = 450;
-    comidas[19].y = 15;
-    comidas[19].desenhar=1;*/
+    comidas[19].x = 0;
+    comidas[19].y = 0;
+    comidas[19].desenhar=0;
     comidas[20].x = 450;
     comidas[20].y = 45;
     comidas[20].desenhar=1;
@@ -240,9 +240,9 @@ void setarPixelComidas (Comida * comidas){
     comidas[34].x = 450;
     comidas[34].y = 470;
     comidas[34].desenhar=1;
-    /*comidas[35].x = 123;
-    comidas[35].y = 15;
-    comidas[35].desenhar=1;*/
+    comidas[35].x = 0;
+    comidas[35].y = 0;
+    comidas[35].desenhar=0;
     comidas[36].x = 123;
     comidas[36].y = 45;
     comidas[36].desenhar=1;
@@ -296,13 +296,13 @@ void setarPixelComidas (Comida * comidas){
     comidas[52].desenhar=1;
     comidas[53].x = 90;
     comidas[53].y = 92;
-    /*comidas[53].desenhar=1;
-    comidas[54].x = 105;
-    comidas[54].y = 90;
-    comidas[54].desenhar=1;
-    comidas[55].x = 135;
-    comidas[55].y = 90;
-    comidas[55].desenhar=1;*/
+    comidas[53].desenhar=1;
+    comidas[54].x = 0;
+    comidas[54].y = 0;
+    comidas[54].desenhar=0;
+    comidas[55].x = 0;
+    comidas[55].y = 0;
+    comidas[55].desenhar=0;
     comidas[56].x = 158;
     comidas[56].y = 92;
     comidas[56].desenhar=1;
@@ -333,9 +333,9 @@ void setarPixelComidas (Comida * comidas){
     comidas[65].x = 428;
     comidas[65].y = 92;
     comidas[65].desenhar=1;
-    /*comidas[66].x = 465;
-    comidas[66].y = 90;
-    comidas[66].desenhar=1;*/
+    comidas[66].x = 0;
+    comidas[66].y = 0;
+    comidas[66].desenhar=0;
     comidas[67].x = 480;
     comidas[67].y = 92;
     comidas[67].desenhar=1;
@@ -384,12 +384,12 @@ void setarPixelComidas (Comida * comidas){
     comidas[82].x = 90;
     comidas[82].y = 360;
     comidas[82].desenhar=1;
-    /*comidas[83].x = 105;
-    comidas[83].y = 360;
-    comidas[83].desenhar=1;
-    comidas[84].x = 135;
-    comidas[84].y = 360;
-    comidas[84].desenhar=1;*/
+    comidas[83].x = 0;
+    comidas[83].y = 0;
+    comidas[83].desenhar=0;
+    comidas[84].x = 0;
+    comidas[84].y = 0;
+    comidas[84].desenhar=0;
     comidas[85].x = 157;
     comidas[85].y = 360;
     comidas[85].desenhar=1;
@@ -414,12 +414,12 @@ void setarPixelComidas (Comida * comidas){
     comidas[92].x = 418;
     comidas[92].y = 360;
     comidas[92].desenhar=1;
-    /*comidas[93].x = 438;
-    comidas[93].y = 360;
-    comidas[93].desenhar=1;
-    comidas[94].x = 468;
-    comidas[94].y = 360;
-    comidas[94].desenhar=1;*/
+    comidas[93].x = 0;
+    comidas[93].y = 0;
+    comidas[93].desenhar=0;
+    comidas[94].x = 0;
+    comidas[94].y = 0;
+    comidas[94].desenhar=0;
     comidas[95].x = 480;
     comidas[95].y = 360;
     comidas[95].desenhar=1;
@@ -726,55 +726,58 @@ int trilho1(int x, int y){
     return 1;
 
 }
-void retirarTrilho(Comida * comida, int x, int y, int * score){
+void retirarTrilho(Comida * comida, int x, int y, int * score,int * score_atual){
     if((comida->x >= x-5 && comida->x <= x+15) && (comida->y >= y-5 && comida->y <= y+15) && comida->desenhar==1){
         comida->desenhar=0;
         *score+=10;
+        *score_atual+=10;
     }
 }
-void verificarMorreu(Fantasma * fantasma,int x,int y, int *score){
+void verificarMorreu(Fantasma * fantasma,int x,int y, int *perdeu){
     if((fantasma->x >= x-15 && fantasma->x <= x+15) && (fantasma->y >= y-15 && fantasma->y <= y+15))
-        *score=-20;
+        *perdeu=1;
 }
-
-void setarFantasmas(Fantasma * fantasmas){
-
-    fantasmas[0].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/vermelho_direita.bmp",NULL);
-    fantasmas[0].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/vermelho_esquerda.bmp",NULL);
-    fantasmas[0].sprites[CIMA] = load_bitmap("sprites/Fantasmas/vermelho_cima.bmp",NULL);
-    fantasmas[0].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/vermelho_baixo.bmp",NULL);
-    fantasmas[0].sprite_atual = fantasmas[0].sprites[DIREITA];
-    fantasmas[0].x = MIN_XY;
-    fantasmas[0].y = MIN_XY;
-    fantasmas[0].direcao = DIREITA;
-
-    fantasmas[1].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/laranja_direita.bmp",NULL);
-    fantasmas[1].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/laranja_esquerda.bmp",NULL);
-    fantasmas[1].sprites[CIMA] = load_bitmap("sprites/Fantasmas/laranja_cima.bmp",NULL);
-    fantasmas[1].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/laranja_baixo.bmp",NULL);
-    fantasmas[1].sprite_atual = fantasmas[0].sprites[CIMA];
-    fantasmas[1].x = MAX_X;
-    fantasmas[1].y = MIN_XY;
-    fantasmas[1].direcao = CIMA;
-
-    fantasmas[2].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/azul_direita.bmp",NULL);
-    fantasmas[2].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/azul_esquerda.bmp",NULL);
-    fantasmas[2].sprites[CIMA] = load_bitmap("sprites/Fantasmas/azul_cima.bmp",NULL);
-    fantasmas[2].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/azul_baixo.bmp",NULL);
-    fantasmas[2].sprite_atual = fantasmas[0].sprites[BAIXO];
-    fantasmas[2].x = MIN_XY;
-    fantasmas[2].y = MAX_Y;
-    fantasmas[2].direcao = BAIXO;
-
-    fantasmas[3].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/rosa_direita.bmp",NULL);
-    fantasmas[3].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/rosa_esquerda.bmp",NULL);
-    fantasmas[3].sprites[CIMA] = load_bitmap("sprites/Fantasmas/rosa_cima.bmp",NULL);
-    fantasmas[3].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/rosa_baixo.bmp",NULL);
-    fantasmas[3].sprite_atual = fantasmas[0].sprites[BAIXO];
-    fantasmas[3].x = MIN_XY;
-    fantasmas[3].y = MAX_Y;
-    fantasmas[3].direcao = BAIXO;
-
+void setarFantasmas(Fantasma * fantasmas, int quantidade){
+    int i;
+    for (i=0;i<quantidade;i++){
+        if(i%4==0){
+            fantasmas[i].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/vermelho_direita.bmp",NULL);
+            fantasmas[i].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/vermelho_esquerda.bmp",NULL);
+            fantasmas[i].sprites[CIMA] = load_bitmap("sprites/Fantasmas/vermelho_cima.bmp",NULL);
+            fantasmas[i].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/vermelho_baixo.bmp",NULL);
+            fantasmas[i].sprite_atual = fantasmas[i].sprites[DIREITA];
+            fantasmas[i].x = MIN_XY;
+            fantasmas[i].y = MIN_XY;
+            fantasmas[i].direcao = DIREITA;
+        }else if(i%4==1){
+            fantasmas[i].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/laranja_direita.bmp",NULL);
+            fantasmas[i].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/laranja_esquerda.bmp",NULL);
+            fantasmas[i].sprites[CIMA] = load_bitmap("sprites/Fantasmas/laranja_cima.bmp",NULL);
+            fantasmas[i].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/laranja_baixo.bmp",NULL);
+            fantasmas[i].sprite_atual = fantasmas[i].sprites[CIMA];
+            fantasmas[i].x = MAX_X;
+            fantasmas[i].y = MIN_XY;
+            fantasmas[i].direcao = CIMA;
+        }else if(i%4==2){
+            fantasmas[i].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/azul_direita.bmp",NULL);
+            fantasmas[i].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/azul_esquerda.bmp",NULL);
+            fantasmas[i].sprites[CIMA] = load_bitmap("sprites/Fantasmas/azul_cima.bmp",NULL);
+            fantasmas[i].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/azul_baixo.bmp",NULL);
+            fantasmas[i].sprite_atual = fantasmas[i].sprites[BAIXO];
+            fantasmas[i].x = MIN_XY;
+            fantasmas[i].y = MAX_Y;
+            fantasmas[i].direcao = BAIXO;
+        }else if(i%4==3){
+            fantasmas[i].sprites[DIREITA] = load_bitmap("sprites/Fantasmas/rosa_direita.bmp",NULL);
+            fantasmas[i].sprites[ESQUERDA] = load_bitmap("sprites/Fantasmas/rosa_esquerda.bmp",NULL);
+            fantasmas[i].sprites[CIMA] = load_bitmap("sprites/Fantasmas/rosa_cima.bmp",NULL);
+            fantasmas[i].sprites[BAIXO] = load_bitmap("sprites/Fantasmas/rosa_baixo.bmp",NULL);
+            fantasmas[i].sprite_atual = fantasmas[i].sprites[DIREITA];
+            fantasmas[i].x = MAX_X/2;
+            fantasmas[i].y = 194;
+            fantasmas[i].direcao = DIREITA;
+        }
+    }
 }
 void movimentarFantasmaQ1(Fantasma * fantasma){
         int chance=-1;
@@ -911,6 +914,39 @@ void movimentarFantasmaQ4(Fantasma * fantasma){
 
 }
 
+void setarDificuldade(int dificuldade,int * velocidade,int * velocidade_fantasma,int * att_quadrante,int * numero_fantasmas){
+    if(dificuldade==1){
+        *velocidade = 5;
+        *velocidade_fantasma = 10;
+        *att_quadrante = 1000;
+        *numero_fantasmas = 1;
+    }else if(dificuldade==2){
+        *velocidade = 7;
+        *velocidade_fantasma = 10;
+        *att_quadrante = 1000;
+        *numero_fantasmas = 2;
+    }else if(dificuldade==3){
+        *velocidade = 10;
+        *velocidade_fantasma = 10;
+        *att_quadrante = 1000;
+        *numero_fantasmas = 3;
+    }else if(dificuldade==4){
+        *velocidade = 10;
+        *velocidade_fantasma = 9;
+        *att_quadrante = 500;
+        *numero_fantasmas = 4;
+    }else if(dificuldade==5){
+        *velocidade = 10;
+        *velocidade_fantasma = 5;
+        *att_quadrante = 500;
+        *numero_fantasmas = 4;
+    }else if(dificuldade==6){
+        *velocidade = 8;
+        *velocidade_fantasma = 10;
+        *att_quadrante = 250;
+        *numero_fantasmas = 16;
+    }
+}
 
 END_OF_FUNCTION(fecha_programa);
 
@@ -942,217 +978,296 @@ int main ()
     baixo[0] = load_bitmap("sprites/pacman2.bmp",NULL);
     baixo[1] = load_bitmap("sprites/pacman22.bmp",NULL);
 
+    Fantasma fantasmas[16];
+
     int quadrante=4;    //1 2
                         //3 4
+
+    int quantidade_fantasmas=4;
+    int VELOCIDADE=10;
+    int VELOCIDADE_FANTASMA=10;
+    int ATT_QUADRANTE=1000;
+    int dificuldade=0;
+
     FONT * font1 = load_font("font1.pcx",NULL,NULL);
 
-    BITMAP *buffer = create_bitmap(800,800);
+    BITMAP *buffer = create_bitmap(801,801);
     BITMAP *sprite_atual = cima[0]; //Ponteiro pro Boneco
     BITMAP *comida = load_bitmap("sprites/comida.bmp",NULL);//Ponteiro pra comida
     BITMAP *mapa = load_bitmap("sprites/mapa.bmp",NULL); //Ponteiro pro mapa
-
-    int quantidade_fantasmas=4;
-    Fantasma fantasmas[quantidade_fantasmas];
-    setarFantasmas(fantasmas);
-
+    BITMAP *menu1 = load_bitmap("sprites/menu.bmp",NULL);
     int score=0;
+    int score_passado=0;
     int i = 0;
     int tempo;
     int tempo_andar = 0;
     int tempo_fantasma = 0;
     int tempo_quadrante =0;
-    int tempo_sprite = clock();
+    int tempo_sprite = 0;
     int pos_x=555,pos_y=515;
-    int direcao_atual=CIMA; //
+    int direcao_atual=DIREITA; //
     //GAME LOOP
 
     //CRIAR VETOR DO TAMANHO DE COMIDAS
     int quantidade_comidas=197;
     Comida comidas[quantidade_comidas];
 
-    setarPixelComidas(comidas);
 
-    while (!exit_programa) //Condição para fechar o programa, array Key[estado da tecla]
-    {
-        int j;
-        //textout_centre_ex(screen,font,"OI ATAIDE, SOU O MELHOR STORM SPIRIT",SCREEN_W/2, SCREEN_H/2,makecol(255,255,255),-1);
-        tempo=clock();
-        //INPUT
-        //Detecta as entradas
-            if(key[KEY_ESC]){
-              fecha_programa();
-            }
+    int jogar=0;
+    do{
+        if(jogar==1){
+            setarDificuldade(dificuldade,&VELOCIDADE,&VELOCIDADE_FANTASMA,&ATT_QUADRANTE,&quantidade_fantasmas);
+            setarFantasmas(fantasmas,quantidade_fantasmas);
+            setarPixelComidas(comidas);
+            int PERDEU=0;
+            int score_atual=0;
+            while (!exit_programa && !PERDEU) //Condição para fechar o programa, array Key[estado da tecla]
+            {
+                int j;
 
-            if(key[KEY_D]){
-                if(trilho(pos_x+1,pos_y))
-                    direcao_atual=DIREITA;
-            }
+                //textout_centre_ex(screen,font,"OI ATAIDE, SOU O MELHOR STORM SPIRIT",SCREEN_W/2, SCREEN_H/2,makecol(255,255,255),-1);
+                tempo=clock();
 
-            if(key[KEY_S]){
-               if(trilho(pos_x,pos_y+1))
-                    direcao_atual=BAIXO;
-            }
-            if(key[KEY_A]){
-               if(trilho(pos_x-1,pos_y))
-                    direcao_atual=ESQUERDA;
-            }
-            if(key[KEY_W]){
-               if(trilho(pos_x,pos_y-1))
-                    direcao_atual=CIMA;
-            }
+                //INPUT
+                //Detecta as entradas
+                    if(key[KEY_ESC]){
+                      fecha_programa();
+                    }
 
-            //printf ("tempo:%d andar:%d\n",tempo, tempo_andar);
-            if(tempo >= tempo_andar){
-                //printf ("X:%d Y:%d\n",pos_x,pos_y);
-                tempo_andar +=VELOCIDADE;
-                if(direcao_atual==DIREITA){
-                    if(trilho(pos_x+1,pos_y))
-                        pos_x++;
+                    if(key[KEY_D]){
+                        if(trilho(pos_x+1,pos_y))
+                            direcao_atual=DIREITA;
+                    }
+
+                    if(key[KEY_S]){
+                       if(trilho(pos_x,pos_y+1))
+                            direcao_atual=BAIXO;
+                    }
+                    if(key[KEY_A]){
+                       if(trilho(pos_x-1,pos_y))
+                            direcao_atual=ESQUERDA;
+                    }
+                    if(key[KEY_W]){
+                       if(trilho(pos_x,pos_y-1))
+                            direcao_atual=CIMA;
+                    }
+
+                    //printf ("tempo:%d andar:%d\n",tempo, tempo_andar);
+                    if(tempo >= tempo_andar){
+                        //printf ("X:%d Y:%d\n",pos_x,pos_y);
+                        tempo_andar +=VELOCIDADE;
+                        if(direcao_atual==DIREITA){
+                            if(trilho(pos_x+1,pos_y))
+                                pos_x++;
+                        }
+                        else if(direcao_atual==ESQUERDA){
+                            if(trilho(pos_x-1,pos_y))
+                                pos_x--;
+                        }
+                        else if(direcao_atual==CIMA){
+                            if(trilho(pos_x,pos_y-1))
+                                pos_y--;
+                        }
+                        else if (direcao_atual==BAIXO){
+                            if(trilho(pos_x,pos_y+1))
+                                pos_y++;
+                        }
+                    }
+
+                    if(tempo >= tempo_quadrante){
+                        //printf ("Quadrante:%d\n",quadrante);
+                        tempo_quadrante +=ATT_QUADRANTE;
+
+                        if (pos_x <= MAX_X/2 && pos_y<=MAX_Y/2)
+                            quadrante=1;
+                        else if (pos_x >= MAX_X/2 && pos_y<=MAX_Y/2)
+                            quadrante=2;
+                        else if (pos_x <= MAX_X/2 && pos_y>=MAX_Y/2)
+                            quadrante=3;
+                        else if (pos_x >= MAX_X/2 && pos_y>=MAX_Y/2)
+                            quadrante=4;
+
+                    }
+
+                    if(tempo >= tempo_fantasma){
+                        //printf ("X:%d Y:%d\n",pos_x,pos_y);
+                        tempo_fantasma +=VELOCIDADE_FANTASMA;
+                        for (j=0;j<quantidade_fantasmas;j++){
+                                int v=0;
+                            if(fantasmas[j].direcao==DIREITA){
+                                if(trilho(fantasmas[j].x+1,fantasmas[j].y))
+                                    fantasmas[j].x++;
+                                else
+                                    v++;
+                            }
+                            else if(fantasmas[j].direcao==ESQUERDA ){
+                                if(trilho(fantasmas[j].x-1,fantasmas[j].y))
+                                    fantasmas[j].x--;
+                                else
+                                    v++;
+                            }
+                            else if(fantasmas[j].direcao==CIMA){
+                                if(trilho(fantasmas[j].x,fantasmas[j].y-1))
+                                    fantasmas[j].y--;
+
+                            }
+                            else if (fantasmas[j].direcao==BAIXO){
+                                if(trilho(fantasmas[j].x,fantasmas[j].y+1))
+                                    fantasmas[j].y++;
+                            }
+                            if(v==1){
+                                if(fantasmas[j].direcao==DIREITA){
+                                    fantasmas[j].direcao=ESQUERDA;
+                                    fantasmas[j].sprite_atual = fantasmas[j].sprites[ESQUERDA];
+                                }
+                                else{
+                                    fantasmas[j].direcao=DIREITA;
+                                    fantasmas[j].sprite_atual = fantasmas[j].sprites[DIREITA];
+                                }
+
+                            }
+                            int k;
+                            if(quadrante==1){
+                                for(k=0;k<quantidade_fantasmas;k++)
+                                    movimentarFantasmaQ1(&fantasmas[j]);
+                            }else if(quadrante==2){
+                                for(k=0;k<quantidade_fantasmas;k++)
+                                    movimentarFantasmaQ2(&fantasmas[j]);
+                            }else if(quadrante==3){
+                                for(k=0;k<quantidade_fantasmas;k++)
+                                    movimentarFantasmaQ3(&fantasmas[j]);
+                            }else if(quadrante==4){
+                                for(k=0;k<quantidade_fantasmas;k++)
+                                    movimentarFantasmaQ4(&fantasmas[j]);
+                            }
+
+                        }
+
+                    }
+
+
+                    if(tempo >= tempo_sprite){
+                        i++;
+                        tempo_sprite+=VELOCIDADE_SPRITE;
+                        if(i>1)
+                            i=0;
+                        if(direcao_atual==0){
+                            sprite_atual = direita[i];
+                        }
+                        else if(direcao_atual==1){
+                            sprite_atual = esquerda[i];
+                        }
+                        else if(direcao_atual==2){
+                            sprite_atual = cima[i];
+                        }
+                        else if (direcao_atual==3){
+                            sprite_atual = baixo[i];
+                        }
+                    }
+
+
+                    //printf ("tempo:%d clock:%d\n",tempo,clock());
+
+
+                //UPDATE
+                //Atualiza o estado do jogo
+                //pos_x++; //Variar a posição do circulo ao longo do tempo
+
+                //DRAW
+                //Parte de desenho - Ponteiro para BITMAP que é o "screen", tudo que vc desenhar, aparece na tela
+
+                draw_sprite(buffer,mapa,0,0);
+
+                for (j=0;j<quantidade_comidas;j++){
+                    retirarTrilho(&comidas[j],pos_x,pos_y,&score,&score_atual);
+                    if(comidas[j].desenhar && comidas[j].x!=0 && comidas[j].y!=0)
+                        draw_sprite(buffer,comida,comidas[j].x+5,comidas[j].y);
                 }
-                else if(direcao_atual==ESQUERDA){
-                    if(trilho(pos_x-1,pos_y))
-                        pos_x--;
-                }
-                else if(direcao_atual==CIMA){
-                    if(trilho(pos_x,pos_y-1))
-                        pos_y--;
-                }
-                else if (direcao_atual==BAIXO){
-                    if(trilho(pos_x,pos_y+1))
-                        pos_y++;
-                }
-            }
 
-            if(tempo >= tempo_quadrante){
-                printf ("Quadrante:%d\n",quadrante);
-                tempo_quadrante +=ATT_QUADRANTE;
-
-                if (pos_x <= MAX_X/2 && pos_y<=MAX_Y/2)
-                    quadrante=1;
-                else if (pos_x >= MAX_X/2 && pos_y<=MAX_Y/2)
-                    quadrante=2;
-                else if (pos_x <= MAX_X/2 && pos_y>=MAX_Y/2)
-                    quadrante=3;
-                else if (pos_x >= MAX_X/2 && pos_y>=MAX_Y/2)
-                    quadrante=4;
-
-            }
-
-            if(tempo >= tempo_fantasma){
-                //printf ("X:%d Y:%d\n",pos_x,pos_y);
-                tempo_fantasma +=VELOCIDADE_FANTASMA;
                 for (j=0;j<quantidade_fantasmas;j++){
-                        int v=0;
-                    if(fantasmas[j].direcao==DIREITA){
-                        if(trilho(fantasmas[j].x+1,fantasmas[j].y))
-                            fantasmas[j].x++;
-                        else
-                            v++;
-                    }
-                    else if(fantasmas[j].direcao==ESQUERDA ){
-                        if(trilho(fantasmas[j].x-1,fantasmas[j].y))
-                            fantasmas[j].x--;
-                        else
-                            v++;
-                    }
-                    else if(fantasmas[j].direcao==CIMA){
-                        if(trilho(fantasmas[j].x,fantasmas[j].y-1))
-                            fantasmas[j].y--;
+                    draw_sprite(buffer,fantasmas[j].sprite_atual,fantasmas[j].x,fantasmas[j].y);
+                    verificarMorreu(&fantasmas[j],pos_x,pos_y,&PERDEU);
+                    //if(fantasmas[j].x == pos_x && fantasmas[j].y == pos_y)
+                    //   score=-9999;
+                }
+                draw_sprite(buffer,sprite_atual,pos_x,pos_y);
+                char scor[20];
+                sprintf(scor,"%d",score);
+                textout_ex(buffer, font1, scor, 650, 50,makecol(255, 255, 255), -1);
 
-                    }
-                    else if (fantasmas[j].direcao==BAIXO){
-                        if(trilho(fantasmas[j].x,fantasmas[j].y+1))
-                            fantasmas[j].y++;
-                    }
-                    if(v==1){
-                        if(fantasmas[j].direcao==DIREITA){
-                            fantasmas[j].direcao=ESQUERDA;
-                            fantasmas[j].sprite_atual = fantasmas[j].sprites[ESQUERDA];
-                        }
-                        else{
-                            fantasmas[j].direcao=DIREITA;
-                            fantasmas[j].sprite_atual = fantasmas[j].sprites[DIREITA];
-                        }
+                char nivel[20];
+                sprintf(nivel,"Dificuldade: %d",dificuldade);
+                textout_ex(buffer, font, nivel, (MAX_X/2)-40, MAX_Y/2,makecol(255, 255, 255), -1);
 
-                    }
-                    int k;
-                    if(quadrante==1){
-                        for(k=0;k<quantidade_fantasmas;k++)
-                            movimentarFantasmaQ1(&fantasmas[j]);
-                    }else if(quadrante==2){
-                        for(k=0;k<quantidade_fantasmas;k++)
-                            movimentarFantasmaQ2(&fantasmas[j]);
-                    }else if(quadrante==3){
-                        for(k=0;k<quantidade_fantasmas;k++)
-                            movimentarFantasmaQ3(&fantasmas[j]);
-                    }else if(quadrante==4){
-                        for(k=0;k<quantidade_fantasmas;k++)
-                            movimentarFantasmaQ4(&fantasmas[j]);
-                    }
-
+                if(score_atual==1850){
+                    dificuldade++;
+                    setarDificuldade(dificuldade,&VELOCIDADE,&VELOCIDADE_FANTASMA,&ATT_QUADRANTE,&quantidade_fantasmas);
+                    setarFantasmas(fantasmas,quantidade_fantasmas);
+                    setarPixelComidas(comidas);
+                    pos_x = MAX_X;
+                    pos_y = MAX_Y;
+                    score_atual = 0;
+                    direcao_atual=DIREITA;
                 }
 
+                if(PERDEU==1){
+                    score_passado=score;
+                    score=0;
+                    jogar=0;
+                    buffer = create_bitmap(801,801);
+                    pos_x = MAX_X;
+                    pos_y = MAX_Y;
+                }
+                draw_sprite(screen,buffer,0,0); //Sprite em que eu quero desenhar, buffer na screen
+            }
+        }else{
+            //ESCOLHER DIFICULDADE
+            if(key[KEY_ESC]){
+                fecha_programa();
             }
 
-
-            if(tempo >= tempo_sprite){
-                i++;
-                tempo_sprite+=VELOCIDADE_SPRITE;
-                if(i>1)
-                    i=0;
-                if(direcao_atual==0){
-                    sprite_atual = direita[i];
-                }
-                else if(direcao_atual==1){
-                    sprite_atual = esquerda[i];
-                }
-                else if(direcao_atual==2){
-                    sprite_atual = cima[i];
-                }
-                else if (direcao_atual==3){
-                    sprite_atual = baixo[i];
-                }
+            if(key[KEY_1]){
+                dificuldade=1;
+                jogar=1;
+            }
+            if(key[KEY_2]){
+                dificuldade=2;
+                jogar=1;
+            }
+            if(key[KEY_3]){
+                dificuldade=3;
+                jogar=1;
+            }
+            if(key[KEY_4]){
+                dificuldade=4;
+                jogar=1;
+            }
+            if(key[KEY_5]){
+                dificuldade=5;
+                jogar=1;
             }
 
+            if(key[KEY_6]){
+                dificuldade=6;
+                jogar=1;
+            }
+            tempo_andar = clock();
+            tempo_fantasma = clock();
+            tempo_quadrante =clock();
+            tempo_sprite = clock();
 
-            //printf ("tempo:%d clock:%d\n",tempo,clock());
+            draw_sprite(buffer,menu1,0,0);
+            char scor[20];
+            sprintf(scor,"%d",score_passado);
+            textout_ex(buffer, font1, scor, 310, 250,makecol(255, 255, 255), -1);
 
-
-        //UPDATE
-        //Atualiza o estado do jogo
-        //pos_x++; //Variar a posição do circulo ao longo do tempo
-
-        //DRAW
-        //Parte de desenho - Ponteiro para BITMAP que é o "screen", tudo que vc desenhar, aparece na tela
-
-        draw_sprite(buffer,mapa,0,0);
-
-        for (j=0;j<quantidade_comidas;j++){
-            retirarTrilho(&comidas[j],pos_x,pos_y,&score);
-            if(comidas[j].desenhar && comidas[j].x!=0 && comidas[j].y!=0)
-                draw_sprite(buffer,comida,comidas[j].x+5,comidas[j].y);
+            draw_sprite(screen,buffer,0,0); //Sprite em que eu quero desenhar, buffer na screen
         }
 
-        for (j=0;j<quantidade_fantasmas;j++){
-            draw_sprite(buffer,fantasmas[j].sprite_atual,fantasmas[j].x,fantasmas[j].y);
-            verificarMorreu(&fantasmas[j],pos_x,pos_y,&score);
-            //if(fantasmas[j].x == pos_x && fantasmas[j].y == pos_y)
-            //   score=-9999;
-        }
-        draw_sprite(buffer,sprite_atual,pos_x,pos_y);
-        char scor[20];
-        if(score>=0){
-            sprintf(scor,"%d",score);
-            textout_ex(buffer, font1, scor, 650, 50,makecol(255, 255, 255), -1);
-        }
-        else{
-            sprintf(scor,"PERDEU LIXO");
-            textout_ex(buffer, font, scor, 650, 50,makecol(255, 255, 255), -1);
+    }while(!exit_programa);
 
-        }
 
-        draw_sprite(screen,buffer,0,0); //Sprite em que eu quero desenhar, buffer na screen
-    }
+
     //FINALIZAÇÃO
     destroy_bitmap(buffer);
     destroy_bitmap(sprite_atual);
