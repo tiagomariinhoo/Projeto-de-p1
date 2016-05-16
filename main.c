@@ -913,7 +913,6 @@ void movimentarFantasmaQ4(Fantasma * fantasma){
 
 
 }
-
 void setarDificuldade(int dificuldade,int * velocidade,int * velocidade_fantasma,int * att_quadrante,int * numero_fantasmas){
     if(dificuldade==1){
         *velocidade = 5;
