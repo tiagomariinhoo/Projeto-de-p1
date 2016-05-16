@@ -940,7 +940,7 @@ void setarDificuldade(int dificuldade,int * velocidade,int * velocidade_fantasma
         *velocidade_fantasma = 5;
         *att_quadrante = 500;
         *numero_fantasmas = 4;
-    }else if(dificuldade==6){
+    }else if(dificuldade>=6){
         *velocidade = 8;
         *velocidade_fantasma = 10;
         *att_quadrante = 250;
